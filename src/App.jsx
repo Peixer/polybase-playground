@@ -26,11 +26,19 @@ function App() {
       .create([uuidv4().toString(), "New-york2"]);
   }
 
+  async function remove_record(id) {
+    await polybase
+      .collection("User")
+      .record(id)
+      .call("del", [])
+  }
+
   const User = ({ user }) => {
     return (
       <div className="card">
         <p>ID: {user.data?.id}</p>
         <p>Name: {user.data?.name}</p>
+        <button onClick={() => remove_record(user.data?.id)}>Remove record</button>
       </div>
     );
   };
@@ -43,7 +51,7 @@ function App() {
       </div>
       <h1>Vite + React + Polybase</h1>
       <div className="card">
-        <button onClick={() => create_record()}>count is</button>
+        <button onClick={() => create_record()}>Create record</button>
       </div>
       <div className="card">
         {users.length > 0 &&
