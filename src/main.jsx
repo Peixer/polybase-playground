@@ -6,7 +6,6 @@ import { PolybaseProvider, AuthProvider } from "@polybase/react";
 import { Polybase } from "@polybase/client";
 import { Auth } from "@polybase/auth";
 
-
 const polybase = new Polybase({
   defaultNamespace: import.meta.env.VITE_REACT_NAMESPACE,
   signer: async (data) => {
@@ -16,7 +15,7 @@ const polybase = new Polybase({
     };
   },
 });
-const auth = new Auth();
+const auth = new Auth({ force: true });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
