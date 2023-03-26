@@ -8,6 +8,7 @@ function App() {
   const { auth } = useAuth();
   const polybase = usePolybase();
   const [users, setUsers] = useState([]);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const collectionReference = polybase.collection("User").onSnapshot(
@@ -21,16 +22,12 @@ function App() {
   }, []);
 
   async function create_record() {
-    await polybase
-      .collection("User")
-      .create([uuidv4().toString(), "New-york2"]);
+    await polybase.collection("User").create([uuidv4().toString(), name]);
+    setName("");
   }
 
   async function remove_record(id) {
-    await polybase
-      .collection("User")
-      .record(id)
-      .call("del", [])
+    await polybase.collection("User").record(id).call("del", []);
   }
 
   const User = ({ user }) => {
@@ -38,10 +35,16 @@ function App() {
       <div className="card">
         <p>ID: {user.data?.id}</p>
         <p>Name: {user.data?.name}</p>
-        <button onClick={() => remove_record(user.data?.id)}>Remove record</button>
+        <button onClick={() => remove_record(user.data?.id)}>
+          Remove record
+        </button>
       </div>
     );
   };
+
+  function handleInputChange(event) {
+    setName(event.target.value);
+  }
 
   return (
     <div className="App">
@@ -51,6 +54,13 @@ function App() {
       </div>
       <h1>Vite + React + Polybase</h1>
       <div className="card">
+        <input
+          type="text"
+          onChange={handleInputChange}
+          bind={name}
+          value={name}
+        />
+        <br></br>
         <button onClick={() => create_record()}>Create record</button>
       </div>
       <div className="card">
