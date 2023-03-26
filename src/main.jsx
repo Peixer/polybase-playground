@@ -8,14 +8,8 @@ import { Auth } from "@polybase/auth";
 
 const polybase = new Polybase({
   defaultNamespace: import.meta.env.VITE_REACT_NAMESPACE,
-  signer: async (data) => {
-    return {
-      h: "eth-personal-sign",
-      sig: await auth.ethPersonalSign(data),
-    };
-  },
 });
-const auth = new Auth({ force: true });
+const auth = new Auth();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

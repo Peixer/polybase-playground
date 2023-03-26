@@ -49,8 +49,10 @@ function App() {
   return (
     <div className="App">
       <div>
-        <button onClick={() => auth.signIn()}>Sign In</button>
-        <button onClick={() => auth.signOut()}>Sign Out</button>
+        <button onClick={async () => await auth.signIn({ force: true })}>
+          Sign In
+        </button>
+        <button onClick={async () => await auth.signOut()}>Sign Out</button>
       </div>
       <h1>Vite + React + Polybase</h1>
       <div className="card">
@@ -60,6 +62,7 @@ function App() {
           bind={name}
           value={name}
         />
+        <br></br>
         <br></br>
         <button onClick={() => create_record()}>Create record</button>
       </div>
